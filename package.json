@@ -1,5 +1,5 @@
 {
-  "name": "reactvite-express-monorepo-template",
+  "name": "reworked-Odin-Blog-API",
   "private": true,
   "workspaces": [
     "backend",
