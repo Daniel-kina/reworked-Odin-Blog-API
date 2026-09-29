@@ -7,4 +7,4 @@ backend/generated
 backend/generated/**
 *.wasm
 *.wasm-base64.js
-package-lock.json
+.agents

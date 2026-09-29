@@ -1,8 +1,7 @@
 import express from "express";
+import { getAllBlogs } from "../controllers/BlogController.js";
 const Router = express.Router();
 
-Router.get("/", (req, res, next) => {
-  res.json("Hello!");
-});
+Router.get("/blogs", getAllBlogs);
 
 export default Router;

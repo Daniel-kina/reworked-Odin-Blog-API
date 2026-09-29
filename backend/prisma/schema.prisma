@@ -4,8 +4,7 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -13,16 +12,47 @@ datasource db {
 }
 
 model User {
-  id  Int @id @default(autoincrement())
-  first_name String
+  id            String   @id @default(uuid())
+  first_name    String
+  last_name     String
+  username      String   @unique
+  password_hash String
+  email         String   @unique
+  created_at    DateTime @default(now())
+
+  blogs    Blog[]
+  comments Comment[]
 }
 
 model Blog {
-  id  Int @id @default(autoincrement())
-  title String 
+  id           String    @id @default(uuid())
+  title        String
+  content      String
+  image        String?
+  is_published Boolean   @default(false)
+  published_at DateTime?
+
+  User   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  comments Comment[]
 }
 
 model Comment {
-  id  Int @id @default(autoincrement())
-  content String
+  id           String   @id @default(uuid())
+  content      String
+  published_at DateTime
+  edited       Boolean  @default(false)
+  likes        Int      @default(0)
+  dislikes     Int      @default(0)
+
+  Blog   Blog   @relation(fields: [blogId], references: [id])
+  blogId String
+
+  User   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  parentComment Comment?  @relation("CommentReplies", fields: [commentId], references: [id])
+  comments      Comment[] @relation("CommentReplies")
+  commentId     String?
 }

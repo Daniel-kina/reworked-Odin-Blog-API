@@ -10,4 +10,13 @@ export default defineConfig({
     environment: "jsdom", // Simuliert den Browser
     setupFiles: "./src/tests/setup.js", // Lädt globale Test-Einstellungen
   },
+  server: {
+    proxy: {
+      // Any request starting with /api will be routed to Express
+      "/api": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+      },
+    },
+  },
 });
